@@ -55,16 +55,11 @@ void provas(){
 	
 		}
 	
-
-	
-		printf("%f\n" ,mnf);
 	
 		for(i=nf;i<nt;i++){
 			ps = ps + pesos[i];	
 		}
 	
-	
-		printf("%d\n" ,pt);
 	
 		np = ((6*pt) - mnf)/ps;
 	
@@ -72,6 +67,11 @@ void provas(){
 	
 	
 	}
+
+	
+	free(notas);
+	free(pesos);
+
 }
 
 
