@@ -6,17 +6,24 @@ typedef struct{
 	char nome[100];  
 	int matricula; 
 	char curso[100];
-	char aula[50];
-	int quantaula;
-	char diaaula[10];
-	int cargah;
-	int aulasemana;
-	int horario[10];
-	int dia[10];
-
+	int quantMaterias;
 
 } ALUNO; // dados do aluno
 
+typedef struct{
+
+	char nomeAula[50];
+	char diaAula[10];
+	int cargaH;
+	int quantDiasSemana; 
+	int quantAulaSemana;
+	int numAulasDia;	
+	int horario;
+	char turno[20];
+	char** diasSemana;
+
+
+} AULA; // dados das aulas
 
 
 int faltas(int carga){ // calcula quantas faltas o aluno pode ter
@@ -34,7 +41,7 @@ int faltas(int carga){ // calcula quantas faltas o aluno pode ter
 int main(){
 
 	ALUNO x;
-	int i,k;
+	int i,k,d;
 	FILE *pont_arq;
 
 	pont_arq = fopen("EAD.txt", "a");
@@ -60,45 +67,59 @@ int main(){
 	system("clear");
 	
 	printf("Quantidade de materias: ");
-	scanf("%d" ,&x.quantaula);
-	fprintf(pont_arq, "%d\n", x.quantaula);
+	scanf("%d" ,&x.quantMaterias);
+	fprintf(pont_arq, "%d\n", x.quantMaterias);
 	
-	ALUNO* y = (ALUNO*) malloc(x.quantaula * sizeof(ALUNO));
 	
+	AULA* y = (AULA*) malloc(x.quantMaterias * sizeof(AULA));
 	
 	
 
-	for(i=0;i<(x.quantaula);i++){
+	for(i=0;i<(x.quantMaterias);i++){
 
 			printf("Nome da matéria %d: " ,(i+1));
-			scanf("%s" ,y[i].aula);
+			scanf("%s" ,y[i].nomeAula);
 			getchar();
 			
 			printf("Carga horária: ");
-			scanf("%d" ,&y[i].cargah);
+			scanf("%d" ,&y[i].cargaH);
 			
-			y[i].aulasemana = y[i].cargah/16; //quantas aulas tem essa materia por semana
+			y[i].quantAulaSemana = y[i].cargaH/16; //quantas aulas tem essa materia por semana
+
+			printf("Quantos dias da semana você tem essa aula?: ");
+			scanf("%d" ,&y[i].quantDiasSemana);
+
+			y[i].numAulasDia = y[i].quantAulaSemana/y[i].quantDiasSemana;
 			
+			y->diasSemana = (char*) malloc(y[i].quantDiasSemana * sizeof(char*));
+			y[i].diasSemana = (int*) malloc(10 * sizeof(int)); 			
 			
-			for(k=0;k<y[i].aulasemana;k++){
+			for(k=0;k<y[i].quantAulaSemana;k++){
 				
-				printf("Dia da aula %d: " ,k+1);
-				// scanf("%d" ,// onde guardar os dias de cada materia?);
-				 
+				for(d=0;d<y[i].quantDiasSemana;d++){
+					printf("Em quais dias da semana você tem essa aula? Separe com espaços.");
+					scanf("%s" ,&y[d].diasSemana);
+				}
+				getchar();
+
+				printf("Turno %d: ",k+1);
+				scanf("%s",&y[k].turno);
+				printf("\n");
+
+ 				getchar();
+
 				printf("Horario da aula %d: ",k+1);
-				// scanf("%d" ,// onde guardar os horarios de cada materia?);
+				scanf("%d",&y[k].horario);
 				printf("\n");
 			}
 			
+			free(y[i].diasSemana);
+			free(y);
 		}
 	
 	
 			
 			
-
-
-
-
 
 
 	return 0;
