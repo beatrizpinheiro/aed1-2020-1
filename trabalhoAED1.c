@@ -109,7 +109,8 @@ void provas(){
 }
 
 ALUNO cadastro(ALUNO *x, AULA *y){
-    int i,k,d;
+    ALUNO x;
+	int i,k,d;
 	FILE *pont_arq;
 
 	pont_arq = fopen("EAD.txt", "a");
@@ -159,19 +160,19 @@ ALUNO cadastro(ALUNO *x, AULA *y){
 
 		y[i].numAulasDia = y[i].quantAulaSemana/y[i].quantDiasSemana;
 			
-		y[i]->diasSemana = (char**) malloc(y[i].quantDiasSemana * 10 * sizeof(char*));
+		y[i].diasSemana = (char**) malloc(y[i].quantDiasSemana * 10 * sizeof(char*));
 			
 		for(k=0;k<y[i].quantAulaSemana;k++){
 				
 			for(d=0;d<y[i].quantDiasSemana;d++){
-				y[i][d].diasSemana = (char**) malloc(10 * sizeof(char*));
+				y[i].diasSemana[d] = (char**) malloc(10 * sizeof(char*));
 				printf("Em quais dias da semana você tem essa aula? Separe com espaços.");
-				scanf("%s" ,&y[i][d].diasSemana); //exemplo: segunda e quarta
+				scanf("%s" ,&y[i].diasSemana[d]); //exemplo: segunda e quarta
 			}
 			getchar();
 
 			printf("Turno %d: ",k+1);
-			scanf("%s",&y[k].turno);
+			scanf("%s",y[k].turno);
 			printf("\n");
 
  			getchar();
@@ -181,8 +182,8 @@ ALUNO cadastro(ALUNO *x, AULA *y){
 			printf("\n");
 		}
 			
-		free(y[i]->diasSemana);
-		free(y);
+		free(y[i].diasSemana);
+		free(y);	
 	}
 }
 
