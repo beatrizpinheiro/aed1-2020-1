@@ -109,7 +109,7 @@ void provas(){
 }
 
 ALUNO cadastro(ALUNO *x, AULA *y){
-    ALUNO x;
+	//ALUNO x;
 	int i,k,d;
 	FILE *pont_arq;
 
@@ -146,44 +146,46 @@ ALUNO cadastro(ALUNO *x, AULA *y){
 
 	for(i=0;i<(x.quantMaterias);i++){
 
-		printf("Nome da matéria %d: " ,(i+1));
+		printf("Nome da matéria ", i, "%d:\n" ,(i+1));
 		scanf("%s" ,y[i].nomeAula);
 		getchar();
 			
 		printf("Carga horária: ");
-		scanf("%d" ,&y[i].cargaH);
+		scanf("%d\n" ,&y[i].cargaH);
 			
 		y[i].quantAulaSemana = y[i].cargaH/16; //quantas aulas tem essa materia por semana
 
-		printf("Quantos dias da semana você tem essa aula?: ");
+		printf("Quantos dias da semana você tem essa aula?:\n");
 		scanf("%d" ,&y[i].quantDiasSemana);
 
-		y[i].numAulasDia = y[i].quantAulaSemana/y[i].quantDiasSemana;
+		y[i].numAulasDia = y[i].quantAulaSemana/y[i].quantDiasSemana; //número de aulas da matéria por dia
 			
-		y[i].diasSemana = (char**) malloc(y[i].quantDiasSemana * 10 * sizeof(char*));
+		y[i].diasSemana = (char**) malloc(y[i].quantDiasSemana * 10 * sizeof(char*)); //dias em que a pessoa tem essa aula
 			
 		for(k=0;k<y[i].quantAulaSemana;k++){
-				
+			
+			printf("Em quais dias da semana você tem essa aula? Separe com enter\n");
 			for(d=0;d<y[i].quantDiasSemana;d++){
 				y[i].diasSemana[d] = (char**) malloc(10 * sizeof(char*));
-				printf("Em quais dias da semana você tem essa aula? Separe com espaços.");
+				printf("Dia 1: ");
 				scanf("%s" ,&y[i].diasSemana[d]); //exemplo: segunda e quarta
+				printf("\n");
 			}
 			getchar();
 
-			printf("Turno %d: ",k+1);
+			printf("Turno %d:\n",k+1);
 			scanf("%s",y[k].turno);
 			printf("\n");
 
  			getchar();
 
-			printf("Horario da aula %d: ",k+1);
+			printf("Horario da aula %d:\n",k+1);
 			scanf("%d",&y[k].horario);
 			printf("\n");
 		}
 			
 		free(y[i].diasSemana);
-		free(y);	
+		free(y);
 	}
 }
 
