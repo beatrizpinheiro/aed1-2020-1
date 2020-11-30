@@ -28,7 +28,6 @@ typedef struct{
 
 
 ALUNO cadastro(ALUNO *x, AULA *y){
-	//ALUNO x;
 	int i,k,d;
 	FILE *pont_arq;
 
@@ -39,38 +38,38 @@ ALUNO cadastro(ALUNO *x, AULA *y){
 
 	printf("Nome: ");
 	
-	scanf("%[^\n]s" ,x.nome);
+	scanf("%[^\n]s" ,x->nome);
 	getchar();
-	fprintf(pont_arq, "%s\n", x.nome);
+	fprintf(pont_arq, "%s\n", x->nome);
 	
 	printf("Matricula: ");
-	scanf("%d%*c" ,&x.matricula);
-	fprintf(pont_arq, "%d\n", x.matricula);
+	scanf("%d%*c" ,&x->matricula);
+	fprintf(pont_arq, "%d\n", x->matricula);
 	
 	printf("Curso: ");
-	scanf("%[^\n]s" ,x.curso);
+	scanf("%[^\n]s" ,x->curso);
 	getchar();
-	fprintf(pont_arq, "%s\n", x.curso);
+	fprintf(pont_arq, "%s\n", x->curso);
 	
 	system("clear");
 	
 	printf("Quantidade de materias: ");
-	scanf("%d" ,&x.quantMaterias);
-	fprintf(pont_arq, "%d\n", x.quantMaterias);
+	scanf("%d" ,&x->quantMaterias);
+	fprintf(pont_arq, "%d\n", x->quantMaterias);
 	
 	
-	AULA* y = (AULA*) malloc(x.quantMaterias * sizeof(AULA));
+	AULA* y = (AULA*) malloc(x->quantMaterias * sizeof(AULA));
 	
 	
 
-	for(i=0;i<(x.quantMaterias);i++){
+	for(i=0;i<(x->quantMaterias);i++){
 
-		printf("Nome da matéria ", i, "%d:\n" ,(i+1));
+		printf("Nome da matéria %d:" ,(i+1));
 		scanf("%s" ,y[i].nomeAula);
 		getchar();
 			
 		printf("Carga horária: ");
-		scanf("%d\n" ,&y[i].cargaH);
+		scanf("%d" ,&y[i].cargaH);
 			
 		y[i].quantAulaSemana = y[i].cargaH/16; //quantas aulas tem essa materia por semana
 
@@ -103,17 +102,19 @@ ALUNO cadastro(ALUNO *x, AULA *y){
 			printf("\n");
 		}
 			
-		free(y[i].diasSemana);
-		free(y);
 	}
 }
 
 int main(){
     
 	int a;
+	int i,k,d;
+	
+	ALUNO *x = (ALUNO*) malloc(sizeof(ALUNO));
 	
 	printf("Faça seu cadastro:\n");
-	//cadastro(x,y);
+	
+	
 	
 	while(1){
 		printf("1- Calcular média das provas\n2- Calcular presença\n3-Finalizar\n");
