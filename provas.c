@@ -103,7 +103,6 @@ void provas(){ // calculo da media do aluno ou de quanto ele necessita para ser 
 			mnf = mnf + ((lista->notas)*pesos[i]);
 			pnf = pnf + pesos[i];	
 			
-			printf("notas : %f\n" ,lista->notas);
 			
 			if(lista->LAST == NULL){
  	       		break;
@@ -122,6 +121,7 @@ void provas(){ // calculo da media do aluno ou de quanto ele necessita para ser 
 		np = ((6*pt) - mnf)/ps;
 	
 		printf("É necessário tirar no minímo %.2f na(s) %d prova(s) restante(s) para passar \n" ,np,(nt-nf));
+		
 	
 	
 	}
@@ -149,6 +149,8 @@ int faltas(int carga){ // calcula quantas faltas o aluno pode ter
 	return numfal;
 
 }
+
+
 
 
 
