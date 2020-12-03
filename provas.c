@@ -9,6 +9,15 @@ struct LISTA{
     
 };
 
+struct Fila {
+ 
+    int capacidade;
+    int *dados;
+    int primeiro;
+    int ultimo;
+    int nItens; 
+ 
+};
  
 
 
@@ -147,6 +156,80 @@ int faltas(int carga){ // calcula quantas faltas o aluno pode ter
 	numfal = 0.25 * carga;
 
 	return numfal;
+
+}
+
+void criarFila( struct Fila *f, int c ) { 
+
+	f->capacidade = c;
+	f->dados = (int*) malloc (f->capacidade * sizeof(int));
+	f->primeiro = 0;
+	f->ultimo = -1;
+	f->nItens = 0; 
+
+}
+
+void inserir(struct Fila *f, int v) {
+
+	if(f->ultimo == f->capacidade-1)
+		f->ultimo = -1;
+
+	f->ultimo++;
+	f->dados[f->ultimo] = v; // incrementa ultimo e insere
+	f->nItens++; // mais um item inserido
+
+}
+
+void mostrarFila(struct Fila *f,struct Fila *d){
+
+	int cont, i;
+	int k;
+	
+	k = d->primeiro;
+
+	for ( cont=0, (i= f->primeiro); cont < f->nItens; cont++){
+
+		printf("%d/%d\n",f->dados[i++],d->dados[k++]);
+
+		if (i == f->capacidade)
+			i=0;
+		
+		
+
+	}
+	printf("\n");
+
+}
+
+
+
+
+void atividades(){
+
+	int v,c,i;
+	struct Fila umaFila;
+	struct Fila doisFila;
+	int d,m;
+	int w=1;
+	
+	printf("Quantas atividades?\n");
+	scanf("%d" ,&c);
+
+	criarFila(&umaFila, c);
+	criarFila(&doisFila,c);
+	
+	for(i=0;i<c;i++){
+		printf("Data de entrega atividade %d:  ",i+1);
+		scanf("%d/%d" ,&d,&m);
+		inserir(&umaFila,d);
+		inserir(&doisFila,m);
+	
+	}
+	
+	
+	
+	mostrarFila(&umaFila,&doisFila);
+
 
 }
 
