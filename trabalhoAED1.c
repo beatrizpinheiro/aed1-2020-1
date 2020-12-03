@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "provas.h"
+#include <string.h>
 
 typedef struct{
 
@@ -8,6 +9,7 @@ typedef struct{
 	int matricula; 
 	char curso[100];
 	int quantMaterias;
+	char turno2[20];
 
 } ALUNO; // dados do aluno
 
@@ -22,95 +24,156 @@ typedef struct{
 	int horario;
 	char turno[20];
 	char** diasSemana;
+	char segundac[20];
+	char tercac[20];
+	char quartac[20];
+	char quintac[20]; 
+	char sextac[20];
+	
 
 
 } AULA; // dados das aulas
 
 
-/*ALUNO cadastro(ALUNO *x){
-	int i,k,d;
-	FILE *pont_arq;
 
-	pont_arq = fopen("EAD.txt", "a");
+void formar(AULA *z, ALUNO *x){
+
+	int i;
+	
+		if(x->turno2[0] == 'n' || x->turno2[0] == 'N'){ 
+	
+			strcpy(z[0].segundac, "Descanso");
+			strcpy(z[5].segundac, "Estudo");
+			strcpy(z[5].tercac, "Estudo");
+			strcpy(z[0].tercac, "Descanso");
+			strcpy(z[5].quartac, "Estudo");
+			strcpy(z[0].quartac, "Descanso");
+			strcpy(z[5].quintac, "Estudo");
+			strcpy(z[0].quintac, "Descanso");
+			strcpy(z[5].sextac, "Estudo");
+			strcpy(z[0].sextac, "Descanso");
+		}
+		else{
+		
+			strcpy(z[5].segundac, "Descanso");
+			strcpy(z[0].segundac, "Estudo");
+			strcpy(z[0].tercac, "Estudo");
+			strcpy(z[5].tercac, "Descanso");
+			strcpy(z[0].quartac, "Estudo");
+			strcpy(z[5].quartac, "Descanso");
+			strcpy(z[0].quintac, "Estudo");
+			strcpy(z[5].quintac, "Descanso");
+			strcpy(z[0].sextac, "Estudo");
+			strcpy(z[5].sextac, "Descanso");
+		
+		
+		}	
+		
+		
+		strcpy(z[1].segundac, "Estudo");
+		strcpy(z[2].segundac, "Almoço");
+		strcpy(z[3].segundac, "Estudo");
+		strcpy(z[4].segundac, "Estudo");
+		
+		strcpy(z[1].tercac, "Estudo");
+		strcpy(z[2].tercac, "Almoço");
+		strcpy(z[3].tercac, "Estudo");
+		strcpy(z[4].tercac, "Estudo");
+	
+		strcpy(z[1].quartac, "Estudo");
+		strcpy(z[2].quartac, "Almoço");
+		strcpy(z[3].quartac, "Estudo");
+		strcpy(z[4].quartac, "Estudo");
+		
+		strcpy(z[1].quintac, "Estudo");
+		strcpy(z[2].quintac, "Almoço");
+		strcpy(z[3].quintac, "Estudo");
+		strcpy(z[4].quintac, "Estudo");
+		
+		strcpy(z[1].sextac, "Estudo");
+		strcpy(z[2].sextac, "Almoço");
+		strcpy(z[3].sextac, "Estudo");
+		strcpy(z[4].sextac, "Estudo");
+		
+		
+		
 	
 
 	
 
-	printf("Nome: ");
-	
-	scanf("%[^\n]s" ,x->nome);
-	getchar();
-	fprintf(pont_arq, "%s\n", x->nome);
-	
-	printf("Matricula: ");
-	scanf("%d%*c" ,&x->matricula);
-	fprintf(pont_arq, "%d\n", x->matricula);
-	
-	printf("Curso: ");
-	scanf("%[^\n]s" ,x->curso);
-	getchar();
-	fprintf(pont_arq, "%s\n", x->curso);
-	
-	system("clear");
-	
-	printf("Quantidade de materias: ");
-	scanf("%d" ,&x->quantMaterias);
-	fprintf(pont_arq, "%d\n", x->quantMaterias);
-	
-	
-	AULA* y = (AULA*) malloc(x->quantMaterias * sizeof(AULA));
-	
-	
+
+}
+
+void Estudo(ALUNO *x, AULA *y, AULA *z){
+
+	int i,k,l,d=(-1),g,s;
+	int segunda[6] = {8,10,12,14,16,18};
+
 
 	for(i=0;i<(x->quantMaterias);i++){
-
-		printf("Nome da matéria %d:" ,(i+1));
-		scanf("%s" ,y[i].nomeAula);
-		getchar();
-			
-		printf("Carga horária: ");
-		scanf("%d" ,&y[i].cargaH);
-			
-		y[i].quantAulaSemana = y[i].cargaH/16; //quantas aulas tem essa materia por semana
-
-		printf("Quantos dias da semana você tem essa aula?:\n");
-		scanf("%d" ,&y[i].quantDiasSemana);
-
-
-		y[i].numAulasDia = y[i].quantAulaSemana/y[i].quantDiasSemana; //número de aulas da matéria por dia
-			
-		y[i].diasSemana = (char**) malloc(y[i].quantDiasSemana * 10 * sizeof(char*)); //dias em que a pessoa tem essa aula
-			
-		for(k=0;k<y[i].quantAulaSemana;k++){
-			
-			printf("Em quais dias da semana você tem essa aula? Separe com enter\n");
-			for(d=0;d<y[i].quantDiasSemana;d++){
-				y[i].diasSemana[d] = (char**) malloc(10 * sizeof(char*));
-				printf("Dia 1: ");
-				scanf("%s" ,&y[i].diasSemana[d]); //exemplo: segunda e quarta
-				printf("\n");
+		for(g=0;g<6;g++){
+			if(y[i].horario == segunda[g]){
+				s = g;
 			}
-			getchar();
-
-			printf("Turno %d:\n",k+1);
-			scanf("%s",y[k].turno);
-			printf("\n");
-
- 			getchar();
-
-			printf("Horario da aula %d:\n",k+1);
-			scanf("%d",&y[k].horario);
-			printf("\n");
-		}
 			
+		}
+		
+		
+		for(l=0;l<=y[i].quantDiasSemana;l++){
+			
+			d++;	
+			if(y[d].turno[0] == 's'){
+				if(y[d].turno[2] == 'g'){
+					strcpy(z[s].segundac, y[i].nomeAula);
+				}
+				if(y[d].turno[2] == 'x'){
+					strcpy(z[s].sextac, y[i].nomeAula);
+				}
+			} 
+			
+			if(y[d].turno[0] == 'q'){
+				if(y[d].turno[2] == 'a'){
+					strcpy(z[s].quartac, y[i].nomeAula);
+					
+		
+				}
+				if(y[d].turno[2] == 'i'){
+					strcpy(z[s].quintac, y[i].nomeAula);
+					
+				
+				}
+			} 
+			if(y[d].turno[0] == 't'){
+				strcpy(z[s].tercac, y[i].nomeAula);
+			} 
+				
+			
+		}
 	}
-}*/
+	
+	
+	printf("\t\tSEGUNDA\tTERÇA\tQUARTA\tQUINTA\tSEXTA\n");
+	
+	int f=8;
+	
+	for(i=0;i<6;i++){
+		printf("%d:00-%d:40:\t" ,f,f+1);
+		f = f+2;
+		printf("%s   ",z[i].segundac);
+		printf("%s   ",z[i].tercac);
+		printf("%s   ",z[i].quartac);
+		printf("%s   ",z[i].quintac);
+		printf("%s\n",z[i].sextac);
+	}
+
+
+
+}
 
 int main(){
     
 	int a,h,c;
-	int i,k,d;
-	char matcarg[100];
+	int i,k,d,l,o=(-1);
 	
 	
 	ALUNO *x = (ALUNO*) malloc(sizeof(ALUNO));
@@ -139,12 +202,19 @@ int main(){
 	
 	system("clear");
 	
+	printf("Qual o seu turno(Ex: Noturno,Integral)\n");
+	scanf("%s" ,x->turno2);
+	getchar();
+	fprintf(pont_arq, "Turno: %s\n", x->turno2);
+	
 	printf("Quantidade de materias: ");
 	scanf("%d" ,&x->quantMaterias);
 	fprintf(pont_arq, "%d matérias\n", x->quantMaterias);
 	
 	
+	
 	AULA* y = (AULA*) malloc(x->quantMaterias * sizeof(AULA));
+	AULA* z = (AULA*) malloc(36 * sizeof(AULA));
 	
 	
 
@@ -155,17 +225,35 @@ int main(){
 		getchar();
 		fprintf(pont_arq, "%s", y[i].nomeAula);
 			
-		printf("Carga horária: ");
+		printf("Carga horária(em horas): ");
 		scanf("%d" ,&y[i].cargaH);
 		fprintf(pont_arq, "- %d horas", y[i].cargaH);
 			
 		y[i].quantAulaSemana = y[i].cargaH/16; //quantas aulas tem essa materia por semana
 
-		printf("Quantos dias da semana você tem essa aula?:\n");
+		printf("Quantos dias da semana você tem essa aula?\n");
 		scanf("%d" ,&y[i].quantDiasSemana);
 		fprintf(pont_arq, "- %d dias por semana\n", y[i].quantDiasSemana);
+		
+		printf("Qual o horario da aula?\n");
+		scanf("%d" ,&y[i].horario);
+		
+		printf("Em quais dias da semana?\n");
+		
+		for(l=0;l<y[i].quantDiasSemana;l++){
+			
+			o++;
+			scanf("%s" ,y[o].turno);			
+			getchar();
+		}
+		o++;
+		
 	}
 	
+	formar(z,x);
+	Estudo(x,y,z);
+	
+		
 	
 	while(1){
 		printf("1- Calcular média das provas\n2- Calcular presença\n3-Finalizar\n");
@@ -180,7 +268,7 @@ int main(){
 				printf("%d-%s\n" ,(h+1),y[h].nomeAula);
 			}
 			scanf("%d" ,&c);
-			printf("Pode ter até %d faltas\n " ,faltas(y[c-1].cargaH));
+			printf("Pode ter até %d faltas\n" ,faltas(y[c-1].cargaH));
 			fprintf(pont_arq, "Pode ter até %d faltas em %s\n" ,faltas(y[c-1].cargaH),y[c-1].nomeAula);
 		}	
 		if(a==3){
@@ -188,7 +276,7 @@ int main(){
 			break;
 		}	
 	
-	
+
 			
 			
 	}
