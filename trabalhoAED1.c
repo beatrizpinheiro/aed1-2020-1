@@ -104,7 +104,7 @@ void formar(AULA *z, ALUNO *x){
 
 }
 
-void Estudo(ALUNO *x, AULA *y, AULA *z){
+void Estudo(ALUNO *x, AULA *y, AULA *z, FILE *pont_arq){
 
 	int i,k,l,d=(-1),g,s;
 	int segunda[6] = {8,10,12,14,16,18};
@@ -153,17 +153,24 @@ void Estudo(ALUNO *x, AULA *y, AULA *z){
 	
 	
 	printf("\t\tSEGUNDA\tTERÇA\tQUARTA\tQUINTA\tSEXTA\n");
+	fprintf(pont_arq,"\t\tSEGUNDA\tTERÇA\tQUARTA\tQUINTA\tSEXTA\n");
 	
 	int f=8;
 	
 	for(i=0;i<6;i++){
 		printf("%d:00-%d:40:\t" ,f,f+1);
+		fprintf(pont_arq,"%d:00-%d:40:\t" ,f,f+1);
 		f = f+2;
 		printf("%s   ",z[i].segundac);
+		fprintf(pont_arq, "%s   "   ,z[i].segundac);
 		printf("%s   ",z[i].tercac);
+		fprintf(pont_arq, "%s   "   ,z[i].tercac);
 		printf("%s   ",z[i].quartac);
+		fprintf(pont_arq, "%s   "   ,z[i].quartac);
 		printf("%s   ",z[i].quintac);
+		fprintf(pont_arq, "%s   "   ,z[i].quintac);
 		printf("%s\n",z[i].sextac);
+		fprintf(pont_arq, "%s   "   ,z[i].sextac);	
 	}
 
 
@@ -200,8 +207,6 @@ int main(){
 	getchar();
 	fprintf(pont_arq, "Curso: %s\n", x->curso);
 	
-	system("clear");
-	
 	printf("Qual o seu turno(Ex: Noturno,Integral)\n");
 	scanf("%s" ,x->turno2);
 	getchar();
@@ -216,11 +221,11 @@ int main(){
 	AULA* y = (AULA*) malloc(x->quantMaterias * sizeof(AULA));
 	AULA* z = (AULA*) malloc(36 * sizeof(AULA));
 	
-	
+	system("clear");
 
 	for(i=0;i<(x->quantMaterias);i++){
 
-		printf("Nome da matéria %d:" ,(i+1));
+		printf("Nome da matéria %d :" ,(i+1));
 		scanf("%s" ,y[i].nomeAula);
 		getchar();
 		fprintf(pont_arq, "%s", y[i].nomeAula);
@@ -250,13 +255,10 @@ int main(){
 		
 	}
 	
-	formar(z,x);
-	Estudo(x,y,z);
-	
 		
 	
 	while(1){
-		printf("1- Calcular média das provas\n2- Calcular presença\n3-Finalizar\n");
+		printf("1- Calcular média das provas\n2- Calcular presença\n3- Ver tabela de estudo\n4- Finalizar\n");
 		
 		scanf("%d" ,&a);
 		
@@ -272,6 +274,10 @@ int main(){
 			fprintf(pont_arq, "Pode ter até %d faltas em %s\n" ,faltas(y[c-1].cargaH),y[c-1].nomeAula);
 		}	
 		if(a==3){
+			formar(z,x);
+			Estudo(x,y,z,pont_arq);
+		}
+		if(a==4){
 			fprintf(pont_arq, "\n\n");
 			break;
 		}	
