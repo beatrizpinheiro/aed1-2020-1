@@ -180,20 +180,22 @@ void inserir(struct Fila *f, int v) {
 
 }
 
-void mostrarFila(struct Fila *f,struct Fila *d){
+void mostrarFila(struct Fila *f,struct Fila *d, FILE* pont_arq){
 
 	int cont, i;
-	int k;
+	int k,h=1;
 	
 	k = d->primeiro;
 
-	for ( cont=0, (i= f->primeiro); cont < f->nItens; cont++){
+	fprintf(pont_arq,"\nAtividades:\n");
 
-		printf("%d/%d\n",f->dados[i++],d->dados[k++]);
-
+	for ( cont=0, (i= f->primeiro); cont < f->nItens; cont++){	
+		
+		fprintf(pont_arq, "Atividade %d: %d/%d\n",h,f->dados[i++],d->dados[k++]);
+		
 		if (i == f->capacidade)
 			i=0;
-		
+		h++;
 		
 
 	}
@@ -204,7 +206,7 @@ void mostrarFila(struct Fila *f,struct Fila *d){
 
 
 
-void atividades(){
+void atividades(FILE* pont_arq){
 
 	int v,c,i;
 	struct Fila umaFila;
@@ -226,9 +228,9 @@ void atividades(){
 	
 	}
 	
+	//mostrarFila2(&umaFila);
 	
-	
-	mostrarFila(&umaFila,&doisFila);
+	mostrarFila(&umaFila,&doisFila,pont_arq);
 
 
 }
