@@ -34,6 +34,17 @@ typedef struct{
 
 } AULA; // dados das aulas
 
+void menuPrincipal(){
+    while(1){
+        printf("1- Consultar meu cronograma de estudos\n");
+        printf("1- Consultar atividades próximas\n");
+        printf("1- Editar cronograma de estudos\n");
+        printf("1- Inserir atividades\n");
+        printf("1- Consultar quantidade de aulas que posso faltar\n");
+        printf("1- Consultar nota que preciso para passar\n");
+    }
+    
+}
 
 
 void formar(AULA *z, ALUNO *x){
@@ -229,7 +240,7 @@ int main(){
 	for(i=0;i<(x->quantMaterias);i++){
 
 				printf("Nome da matéria %d :" ,(i+1));
-				scanf("%s" ,y[i].nomeAula);
+				scanf("%[^\n]s" ,y[i].nomeAula);
 				getchar();
 				fprintf(pont_arq, "%s", y[i].nomeAula);
 					
@@ -267,7 +278,7 @@ int main(){
 		if(a==1)provas();
 		
 		if(a==2){
-			printf("Escolha a matéria para calcular preseça\n");	
+			printf("Escolha a matéria para calcular presença\n");	
 			for(h=0;h<(x->quantMaterias);h++){
 				
 				printf("%d-%s\n" ,(h+1),y[h].nomeAula);
@@ -300,4 +311,3 @@ int main(){
 
 	return 0;
 }
-
