@@ -34,18 +34,6 @@ typedef struct{
 
 } AULA; // dados das aulas
 
-void menuPrincipal(){
-    while(1){
-        printf("1- Consultar meu cronograma de estudos\n");
-        printf("1- Consultar atividades próximas\n");
-        printf("1- Editar cronograma de estudos\n");
-        printf("1- Inserir atividades\n");
-        printf("1- Consultar quantidade de aulas que posso faltar\n");
-        printf("1- Consultar nota que preciso para passar\n");
-    }
-    
-}
-
 
 void formar(AULA *z, ALUNO *x){
 
@@ -107,11 +95,7 @@ void formar(AULA *z, ALUNO *x){
 		strcpy(z[4].sextac, "Estudo");
 		
 		
-		
 	
-
-	
-
 
 }
 
@@ -164,7 +148,7 @@ void Estudo(ALUNO *x, AULA *y, AULA *z, FILE *pont_arq){
 	system("clear");
 	
 	
-	printf("\t\tSEGUNDA\tTERÇA\tQUARTA\tQUINTA\tSEXTA\n");
+	printf("\t\tSEGUNDA""\tTERÇA   ""\tQUARTA ""\tQUINTA ""\tSEXTA  \n");
 	fprintf(pont_arq,"\n\t\tSEGUNDA\tTERÇA\tQUARTA\tQUINTA\tSEXTA\n");
 	
 	int f=8;
@@ -238,40 +222,42 @@ int main(){
 
 	
 	for(i=0;i<(x->quantMaterias);i++){
+		printf("Nome da matéria %d :\n" ,(i+1));
+		getchar();
+		scanf("%[^\n]s" ,y[i].nomeAula);
+		getchar();
+		fprintf(pont_arq, "%s", y[i].nomeAula);
+					
+		printf("Carga horária(em horas): ");
+		scanf("%d" ,&y[i].cargaH);
+		fprintf(pont_arq, "- %d horas", y[i].cargaH);
+					
+		y[i].quantAulaSemana = y[i].cargaH/16; //quantas aulas tem essa materia por semana
 
-				printf("Nome da matéria %d :" ,(i+1));
-				scanf("%[^\n]s" ,y[i].nomeAula);
-				getchar();
-				fprintf(pont_arq, "%s", y[i].nomeAula);
-					
-				printf("Carga horária(em horas): ");
-				scanf("%d" ,&y[i].cargaH);
-				fprintf(pont_arq, "- %d horas", y[i].cargaH);
-					
-				y[i].quantAulaSemana = y[i].cargaH/16; //quantas aulas tem essa materia por semana
-
-				printf("Quantos dias da semana você tem essa aula?\n");
-				scanf("%d" ,&y[i].quantDiasSemana);
-				fprintf(pont_arq, "- %d dias por semana\n", y[i].quantDiasSemana);
+		printf("Quantos dias da semana você tem essa aula?\n");
+		scanf("%d" ,&y[i].quantDiasSemana);
+		fprintf(pont_arq, "- %d dias por semana\n", y[i].quantDiasSemana);
 				
-				printf("Qual o horario da aula?\n");
-				scanf("%d" ,&y[i].horario);
+		printf("Qual o horario da aula?\n");
+		scanf("%d" ,&y[i].horario);
 				
-				printf("Em quais dias da semana?\n");
+		printf("Em quais dias da semana?\n");
 				
-				for(l=0;l<y[i].quantDiasSemana;l++){
-					
-					o++;
-					scanf("%s" ,y[o].turno);			
-					getchar();
-				}
-				o++;
-				
-			}
+		for(l=0;l<y[i].quantDiasSemana;l++){
+			o++;
+			scanf("%s" ,y[o].turno);			
+			getchar();
+		}
+		o++;
+	}
 		
 	
 	while(1){
-		printf("1- Calcular média das provas\n2- Calcular presença\n3- Ver tabela de estudo\n4- Organizar Atividades\n5- Finalizar\n");
+		printf("1- Calcular média das provas;\n");
+		printf("2- Calcular Presença;\n");
+		printf("3- Consultar Cronograma de Estudos;\n");
+		printf("4- Organizar Atividades;\n");
+		printf("5-Finalizar.\n");
 		
 		scanf("%d" ,&a);
 		
@@ -280,7 +266,6 @@ int main(){
 		if(a==2){
 			printf("Escolha a matéria para calcular presença\n");	
 			for(h=0;h<(x->quantMaterias);h++){
-				
 				printf("%d-%s\n" ,(h+1),y[h].nomeAula);
 			}
 			scanf("%d" ,&c);
@@ -289,20 +274,20 @@ int main(){
 		}	
 		
 		if(a==3){
-			
+			system("clear");
 			formar(z,x);
 			Estudo(x,y,z,pont_arq);
 		}
-		
 		if(a==4){
 			system("clear");
 			atividades(pont_arq);
 		}
 		
 		if(a==5){
-			fprintf(pont_arq, "\n\n");
+		    fprintf(pont_arq, "\n\n");
 			break;
-		}			
+
+		}
 			
 	}
 	
