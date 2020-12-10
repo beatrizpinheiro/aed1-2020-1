@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 struct LISTA{
 
@@ -9,16 +10,26 @@ struct LISTA{
     
 };
 
+typedef struct dados{
+	int data;
+	char categoria[20];
+	char materia[200];
+	int codigo;
+}Dados;
+
 struct Fila {
- 
+ 		
     int capacidade;
-    int *dados;
+    Dados *dados;
+		Dados *prox;
     int primeiro;
     int ultimo;
     int nItens; 
  
 };
- 
+
+
+
 
 
 void provas(){ // calculo da media do aluno ou de quanto ele necessita para ser aprovado
@@ -162,28 +173,37 @@ int faltas(int carga){ // calcula quantas faltas o aluno pode ter
 void criarFila( struct Fila *f, int c ) { 
 
 	f->capacidade = c;
-	f->dados = (int*) malloc (f->capacidade * sizeof(int));
+	f->dados = (Dados*) malloc (f->capacidade * sizeof(Dados));
 	f->primeiro = 0;
 	f->ultimo = -1;
 	f->nItens = 0; 
 
 }
 
-void inserir(struct Fila *f, int v) {
+int excluir(struct Fila *f, Dados dados2){
+	if(f->primeiro == NULL) return 0;
+	Dados apagar = f->primeiro;
+	f->primeiro = f->(primeiro+1);
+	free(apagar);
+	if(f->primeiro == NULL) f->fim = NULL;
+	return 1;
+}
+
+void inserir(struct Fila *f, Dados dados) {
 
 	if(f->ultimo == f->capacidade-1)
 		f->ultimo = -1;
 
 	f->ultimo++;
-	f->dados[f->ultimo] = v; // incrementa ultimo e insere
+	f->dados[f->ultimo] = dados; // incrementa ultimo e insere
 	f->nItens++; // mais um item inserido
 
 }
 
 void mostrarFila(struct Fila *f,struct Fila *d, FILE* pont_arq){
 
-	int cont, i;
-	int k,h=1;
+	int cont, i, cont2, i2, k2;
+	int k, h=1, h2=1;
 	
 	k = d->primeiro;
 
@@ -191,12 +211,25 @@ void mostrarFila(struct Fila *f,struct Fila *d, FILE* pont_arq){
 
 	for ( cont=0, (i= f->primeiro); cont < f->nItens; cont++){	
 		
-		fprintf(pont_arq, "Atividade %d: %d/%d\n",h,f->dados[i++],d->dados[k++]);
-		
+		fprintf(pont_arq, "%d | %s - %s: %d/%d\n", h, f->dados[i++].categoria,d->dados[i].materia, f->dados[i].data, f->dados[k++].data);
+		f->dados[i].codigo = h;
 		if (i == f->capacidade)
 			i=0;
-		h++;
+			h++;
+
+	}
+	
+	k2 = d->primeiro;
+
+	printf("\nAtividades:\n");
+	printf("\n");
+	for ( cont2=0, (i2= f->primeiro); cont2 < f->nItens; cont2++){	
 		
+		printf("%d | %s - %s: %d/%d\n", h2, f->dados[i2++].categoria,d->dados[i2].materia, f->dados[i2].data, f->dados[k2++].data);
+		f->dados[i2].codigo = h2;
+		if (i2 == f->capacidade)
+			i2=0;
+			h2++;
 
 	}
 	printf("\n");
@@ -208,35 +241,80 @@ void mostrarFila(struct Fila *f,struct Fila *d, FILE* pont_arq){
 
 void atividades(FILE* pont_arq){
 
-	int v,c,i;
+	int v,c,i, cod;
 	struct Fila umaFila;
 	struct Fila doisFila;
-	int d,m;
+	Dados dados;
+	Dados dados2;
+	int d,m,e;
 	int w=1;
-	
-	printf("Quantas atividades?\n");
-	scanf("%d" ,&c);
+	char materia[200];
+	char categoria[20];
 
-	criarFila(&umaFila, c);
-	criarFila(&doisFila,c);
+	while(1){
+		printf("\n1 - Inserir atividades\n");
+		printf("2 - Ver atividades\n");
+		printf("3 - Excluir atividade\n");
+		printf("4 - Encerrar\n");
+		printf("\n");
+
+		scanf("%d",&e);
+
+		if(e==1){
+			system("clear");				
+			printf("Quantas atividades?\n");
+			scanf("%d" ,&c);
+
+			criarFila(&umaFila, c);
+			criarFila(&doisFila,c);
 	
-	for(i=0;i<c;i++){
-		printf("Data de entrega atividade %d:  ",i+1);
-		scanf("%d/%d" ,&d,&m);
-		inserir(&umaFila,d);
-		inserir(&doisFila,m);
+			for(i=0;i<c;i++){
+				printf("Data de entrega da atividade %d:  ",i+1);
+				scanf("%d/%d" ,&d,&m);
+
+				printf("Categoria (Prova, Tarefa, Trabalho...): ");
+				scanf("%s", categoria);
+
+				printf("Matéria: ");
+				scanf("%s", materia);
+
+				dados.data = d;
+				strcpy(dados.categoria, categoria);
+				strcpy(dados.materia, materia);
+
+				inserir(&umaFila,dados);
+
+				dados.data = m;
+				strcpy(dados.categoria, categoria);
+				strcpy(dados.materia, materia);
+
+				inserir(&doisFila,dados);
 	
+			}
+
+		}
+
+		if(e==2){
+			system("clear");
+			mostrarFila(&umaFila,&doisFila,pont_arq);
+		}
+		if(e==3){
+			printf("Digite o código da atividade:");
+			scanf("%d", &cod);
+			for(i=0; i<umaFila->capacidade; i++){
+				if(umaFila->dados[i].codigo == cod)
+					dados2 = dados[i];
+			}
+			excluir(&umaFila, dados2);
+			excluir(&doisFila, dados2);
+		}
+		if(e==4) break;
+
 	}
 	
 	
 	
-	mostrarFila(&umaFila,&doisFila,pont_arq);
+	
 
 
 }
-
-
-
-
-
-
