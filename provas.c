@@ -180,7 +180,7 @@ void criarFila( struct Fila *f, int c ) {
 
 }
 
-void excluir(struct Fila *f, Dados dados){}
+
 
 void inserir(struct Fila *f, Dados dados) {
 
@@ -252,8 +252,7 @@ void atividades(FILE* pont_arq){
 	while(1){
 		printf("\n1 - Inserir atividades\n");
 		printf("2 - Ver atividades\n");
-		printf("3 - Excluir atividade\n");
-		printf("4 - Encerrar\n");
+		printf("3 - Encerrar\n");
 		printf("\n");
 
 		scanf("%d",&e);
@@ -296,10 +295,8 @@ void atividades(FILE* pont_arq){
 			system("clear");
 			mostrarFila(&umaFila,&doisFila,pont_arq);
 		}
-		if(e==3){
-
-		}
-		if(e==4) break;
+		
+		if(e==3) break;
 
 	}
 	
@@ -309,3 +306,4 @@ void atividades(FILE* pont_arq){
 
 
 }
+
