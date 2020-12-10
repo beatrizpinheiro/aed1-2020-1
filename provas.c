@@ -228,7 +228,7 @@ void atividades(FILE* pont_arq){
 	
 	}
 	
-	//mostrarFila2(&umaFila);
+	
 	
 	mostrarFila(&umaFila,&doisFila,pont_arq);
 
