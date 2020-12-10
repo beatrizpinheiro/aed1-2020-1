@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 
 struct LISTA{
 
@@ -18,10 +19,9 @@ typedef struct dados{
 }Dados;
 
 struct Fila {
- 		
+ 
     int capacidade;
     Dados *dados;
-		Dados *prox;
     int primeiro;
     int ultimo;
     int nItens; 
@@ -111,7 +111,7 @@ void provas(){ // calculo da media do aluno ou de quanto ele necessita para ser 
 		
 		mf = mf/pt;
 	
-		printf("Sua média final será de %.2f\n" ,mf);
+		printf("\nSua média final será de %.2f\n" ,mf);
 	}
 	
 	else{
@@ -180,14 +180,7 @@ void criarFila( struct Fila *f, int c ) {
 
 }
 
-int excluir(struct Fila *f, Dados dados2){
-	if(f->primeiro == NULL) return 0;
-	Dados apagar = f->primeiro;
-	f->primeiro = f->(primeiro+1);
-	free(apagar);
-	if(f->primeiro == NULL) f->fim = NULL;
-	return 1;
-}
+void excluir(struct Fila *f, Dados dados){}
 
 void inserir(struct Fila *f, Dados dados) {
 
@@ -201,7 +194,13 @@ void inserir(struct Fila *f, Dados dados) {
 }
 
 void mostrarFila(struct Fila *f,struct Fila *d, FILE* pont_arq){
-
+	struct tm *data_hora_atual;       
+  time_t segundos;
+  time(&segundos);     
+  data_hora_atual = localtime(&segundos);
+	printf("\nData de hoje : %d/", data_hora_atual->tm_mday);
+  printf("%d/",data_hora_atual->tm_mon+1); //mês
+  printf("%d\n\n",data_hora_atual->tm_year+1900); //ano  
 	int cont, i, cont2, i2, k2;
 	int k, h=1, h2=1;
 	
@@ -211,7 +210,7 @@ void mostrarFila(struct Fila *f,struct Fila *d, FILE* pont_arq){
 
 	for ( cont=0, (i= f->primeiro); cont < f->nItens; cont++){	
 		
-		fprintf(pont_arq, "%d | %s - %s: %d/%d\n", h, f->dados[i++].categoria,d->dados[i].materia, f->dados[i].data, f->dados[k++].data);
+		fprintf(pont_arq, "%d | %s - %s: %d/%d\n", h, f->dados[i++].categoria,d->dados[i].materia, f->dados[i].data, d->dados[k++].data);
 		f->dados[i].codigo = h;
 		if (i == f->capacidade)
 			i=0;
@@ -225,7 +224,7 @@ void mostrarFila(struct Fila *f,struct Fila *d, FILE* pont_arq){
 	printf("\n");
 	for ( cont2=0, (i2= f->primeiro); cont2 < f->nItens; cont2++){	
 		
-		printf("%d | %s - %s: %d/%d\n", h2, f->dados[i2++].categoria,d->dados[i2].materia, f->dados[i2].data, f->dados[k2++].data);
+		printf("%d | %s - %s: %d/%d\n", h2, f->dados[i2++].categoria,d->dados[i2].materia, f->dados[i2].data, d->dados[k2++].data);
 		f->dados[i2].codigo = h2;
 		if (i2 == f->capacidade)
 			i2=0;
@@ -240,12 +239,11 @@ void mostrarFila(struct Fila *f,struct Fila *d, FILE* pont_arq){
 
 
 void atividades(FILE* pont_arq){
-
-	int v,c,i, cod;
+	
+	int v,c,i;
 	struct Fila umaFila;
 	struct Fila doisFila;
 	Dados dados;
-	Dados dados2;
 	int d,m,e;
 	int w=1;
 	char materia[200];
@@ -299,14 +297,7 @@ void atividades(FILE* pont_arq){
 			mostrarFila(&umaFila,&doisFila,pont_arq);
 		}
 		if(e==3){
-			printf("Digite o código da atividade:");
-			scanf("%d", &cod);
-			for(i=0; i<umaFila->capacidade; i++){
-				if(umaFila->dados[i].codigo == cod)
-					dados2 = dados[i];
-			}
-			excluir(&umaFila, dados2);
-			excluir(&doisFila, dados2);
+
 		}
 		if(e==4) break;
 
